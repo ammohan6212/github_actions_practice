@@ -1,0 +1,32 @@
+name: Env Scope Example
+
+on: [push]
+
+env:  # 🌐 Global ENV
+  GLOBAL_VAR: "global_value"
+
+jobs:
+  demo-job:
+    runs-on: ubuntu-latest
+
+    env:  # 💼 Job-Level ENV
+      JOB_VAR: "job_value"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Print Global and Job ENV
+        run: |
+          echo "GLOBAL_VAR: $GLOBAL_VAR"
+          echo "JOB_VAR: $JOB_VAR"
+      
+      - name: Print Step-Level ENV
+        run: |
+          echo "STEP_VAR: $STEP_VAR"
+        env:  # 📦 Step-Level ENV
+          STEP_VAR: "step_value"
+
+
+
+# GitHub Actions doesn't automatically load .env files like Node or Python apps. You'll need to source it manually.

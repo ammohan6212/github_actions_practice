@@ -1,0 +1,60 @@
+
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+        
+      - name: Build project
+        run: |
+          make
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build  # This job will only run after the "build" job completes
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Run tests
+        run: |
+          sudo apt-get install -y python3
+          python3 -m unittest discover tests/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # This job will only run after the "test" job completes successfully
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Deploy to production
+        run: |
+          echo "Deploying project to production..."
+          # deployment steps here
+
+
+# ### Explanation:
+# 1. **Build Job**: The first job checks out the code, installs dependencies, and runs a build command (`make`).
+# 2. **Test Job**: The second job depends on the `build` job (indicated by `needs: build`). It only runs if the `build` job is successful. It installs Python, then runs unit tests.
+# 3. **Deploy Job**: The third job depends on the `test` job (indicated by `needs: test`). It runs only if the `test` job is successful. It simulates a deployment process.
+
+# ### Key Points:
+# - The `needs` keyword defines job dependencies. A job with a `needs` dependency will run only after the job it depends on completes successfully.
+# - If a dependent job fails, the job that needs it will be skipped.
+# - You can have multiple jobs in parallel that don't need to wait for each other.
+
+# This structure helps in managing complex workflows with sequential and parallel jobs in GitHub Actions.

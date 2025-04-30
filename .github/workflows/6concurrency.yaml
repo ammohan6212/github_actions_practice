@@ -1,0 +1,52 @@
+
+name: CI with Concurrency Control
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: echo "Installing dependencies..."
+
+      - name: Run Tests
+        run: echo "Running tests..."
+
+      - name: Build Project
+        run: echo "Building project..."
+# ```
+
+# ---
+
+# ### 🔍 Explanation
+
+# - **`concurrency`**: This prevents multiple instances of the same workflow from running at the same time on the same branch (`main` here).
+  
+# - **`group`**:
+#   - The group is set dynamically using `${{ github.ref }}`.
+#   - This ensures that concurrency is based on the **branch name**.
+  
+# - **`cancel-in-progress: true`**:
+#   - If a workflow is already running in this concurrency group and a new one is triggered, the older run will be **automatically cancelled**.
+
+# ---
+
+# ### 💡 Example Use Case
+
+# Imagine you push 3 commits quickly to `main`. Without concurrency, GitHub would run 3 separate workflows. But with this config:
+# - Only the latest run continues.
+# - Earlier in-progress ones get cancelled.
+
+# Would you like an example where `group` is defined with a matrix strategy or a specific environment name too?
