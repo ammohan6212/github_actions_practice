@@ -162,13 +162,15 @@ on:
     issue_comment:
       types:
         - created 
+        - edited
+        - deleted
 jobs:
   test:
     name: just checking the pipeline to work or not 
     runs-on: ubuntu-latest 
     steps:
       - name: checking the issue_comment 
-        run: echo "this is working"
+        run: echo "this is working ${{ github.event.comment.body }}"
   
 
 
