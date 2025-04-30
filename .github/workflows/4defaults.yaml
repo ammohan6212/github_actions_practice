@@ -1,0 +1,47 @@
+name: Example with Defaults
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    ##here we can the shell and working directory for each jobs
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./app
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print current directory
+        run: pwd
+
+      - name: List files
+        run: ls -la
+
+      - name: Use custom action with default path
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -r requirements.txt
