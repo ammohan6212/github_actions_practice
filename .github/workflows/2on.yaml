@@ -203,15 +203,91 @@ on:
 
 
 
-    create: 
-    ##The create event is triggered when a branch or tag is created in the repository.
-jobs:
-  createjob: 
-    name: this is to test the crewat
-    runs-on: ubuntu-latest 
-    steps:
-      - name: just testing 
-        run: echo "this is the best way"
+    # create: 
+    # ##The create event is triggered when a branch or tag is created in the repository.
+# jobs:
+#   createjob: 
+#     name: this is to test the crewat
+#     runs-on: ubuntu-latest 
+#     steps:
+#       - name: just testing 
+#         run: echo "this is the best way"
+
+
+
+
+
+    # delete:
+    #   branches:
+    #     - 'main'                  # Trigger when the 'main' branch is deleted
+    #     - 'develop'               # Trigger when the 'develop' branch is deleted
+    #     - 'feature/*'             # Trigger when any feature branch (e.g., feature/xyz) is deleted
+    #     - 'hotfix/*'              # Trigger when any hotfix branch (e.g., hotfix/abc) is deleted
+    #     - 'release/*'             # Trigger when any release branch (e.g., release/v1.0) is deleted
+    #     - '**/*'                  # Trigger for all branch deletions (use cautiously)
+
+    #   tags:
+    #     - 'v*'                     # Trigger on deletion of any tag starting with 'v' (e.g., v1.0.0, v2.1.0)
+    #     - 'release/*'              # Trigger on deletion of any tag starting with 'release/' (e.g., release/v1.0)
+    #     - 'stable/*'               # Trigger on deletion of tags starting with 'stable/' (e.g., stable/v1.0)
+    #     - 'prod/*'                 # Trigger on deletion of tags starting with 'prod/' (e.g., prod/2023-05-01)
+    #     - 'dev-*'                  # Trigger on deletion of tags starting with 'dev-' (e.g., dev-v1)
+    #     - '**/*'                   # Trigger for all tag deletions (use cautiously)
+    
+
+
+
+
+
+
+    # deployment:
+    #   types: [created]  # Trigger on deployment creation
+  
+
+
+
+
+    # deployment_status:
+    #   types: [success, failure]    # Trigger on success or failure of deployment
+
+
+    # release:
+    #   types: [published, edited]
+
+
+    # issues:    # lables are used in issues and pull request 
+    #   types: [labeled]   #when addded label to the issue it will triiger
+    #   labels:
+    #     - bug
+    #     - enhancement
+
+
+    # pull_request:
+    #   types: [labeled]  #types: [labeled]: Ensures that the workflow is triggered when the label is applied,
+    #   labels:
+    #     - ready-for-review
+
+
+
+
+    # milestone:
+    #   types:
+    #     - created
+    #     - closed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
