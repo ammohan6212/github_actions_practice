@@ -364,8 +364,7 @@ on:
 
 
     workflow_run:
-      workflows:
-        - ci workflow   # Trigger after "CI Workflow" completes
+      workflows: ["ci workflow"]   # Trigger after "CI Workflow" completes
       types:
         - success      # Trigger only on successful completion
 jobs:
