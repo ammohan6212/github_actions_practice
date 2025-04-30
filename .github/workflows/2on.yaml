@@ -159,19 +159,61 @@ on:
 
 
 
-    issue_comment:
-      types:
-        - created 
-        - edited
-        - deleted
+#     issue_comment:
+#       types:
+#         - created 
+#         - edited
+#         - deleted
+# jobs:
+#   test:
+#     name: just checking the pipeline to work or not 
+#     runs-on: ubuntu-latest 
+#     steps:
+#       - name: checking the issue_comment 
+#         run: echo "this is working ${{ github.event.comment.body }}"
+
+
+
+
+    # release:
+    #   types:
+    #     - created
+    #     - edited
+    #     - deleted
+
+
+
+
+
+    # check_run:
+    #   types:
+    #     - created
+    #     - completed 
+    #     - rerequested
+
+
+
+    # check_suite:
+    #   types:
+    #     - completed
+    #     - requested
+    #     - rerequested
+
+
+
+
+
+    create: 
+    ##The create event is triggered when a branch or tag is created in the repository.
 jobs:
-  test:
-    name: just checking the pipeline to work or not 
+  createjob: 
+    name: this is to test the crewat
     runs-on: ubuntu-latest 
     steps:
-      - name: checking the issue_comment 
-        run: echo "this is working ${{ github.event.comment.body }}"
-  
+      - name: just testing 
+        run: echo "this is the best way"
+
+
 
 
 
