@@ -108,34 +108,73 @@ on:
     #   merged: true         # Trigger workflow when a PR is merged
 
 
-    workflow_dispatch: 
-      inputs: 
-        username: 
-          description: "enter environment to deploy"
-          required: true
-          type: string
-        deploy_type:
-          description: "choose deployment types"
-          required: true 
-          type: string
-          options: 
-            - "canary"
-            - "blue-green"
-          default: "canary"
-        tags: 
-          description: "enter the tag"
-          required: true 
-          type: number
 
 
 
-jobs:
-  deploy: 
-    name: this is for deployment of the job 
-    runs-on:  ubuntu-latest 
-    steps:
-      - name: gettign the variable 
-        run: |
-          echo "${{github.event.inputs.deploy_type}} and ${{github.event.inputs.username}} and $${{github.event.inputs.tags}}"
+
+    # schedule:
+    #   - cron: '0 0 * * *'
+    #   - cron: '0 9 * * 0'
+    #   - cron: '0 1 * * 0'
+
+
+
+
+
+    # workflow_dispatch: 
+    #   inputs: 
+    #     username: 
+    #       description: "enter environment to deploy"
+    #       required: true
+    #       type: string
+    #     deploy_type:
+    #       description: "choose deployment types"
+    #       required: true 
+    #       type: string
+    #       options: 
+    #         - "canary"
+    #         - "blue-green"
+    #       default: "canary"
+    #     tags: 
+    #       description: "enter the tag"
+    #       required: true 
+    #       type: number
+# jobs:
+#   deploy: 
+#     name: this is for deployment of the job 
+#     runs-on:  ubuntu-latest 
+#     steps:
+#       - name: gettign the variable 
+#         run: |
+#           echo "${{github.event.inputs.deploy_type}} and ${{github.event.inputs.username}} and $${{github.event.inputs.tags}}"
 
   
+
+
+    # You can trigger workflows in another repository using the repository_dispatch event.
+    # repository_dispatch: 
+    #   types: ["build","deploy","test"]
+
+
+
+
+
+    issue_comment:
+      types:
+        - created 
+jobs:
+  test:
+    name: just checking the pipeline to work or not 
+    runs-on: ubuntu-latest 
+    steps:
+      - name: checking the issue_comment 
+        run: echo "this is working"
+  
+
+
+
+
+
+
+
+
