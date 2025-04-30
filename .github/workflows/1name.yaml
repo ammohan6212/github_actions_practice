@@ -1,11 +1,16 @@
 name: deploy the application to the dev env 
-run-name: dploye is triggered by ${{github.actor}}
+
 
 
 on:
   push: 
     branches:
       - dev
+run-name: dploye is triggered by ${{github.actor}}  on branh ${{github.ref_name}} on ${{github.repository}}
+##thiss one display as the heading the pipeline section
+
+
+
 jobs:
   deploy: 
     name: displaying job 
