@@ -4,6 +4,19 @@ on:
   push: 
     branches:
       - 'dev'
+      - 'feature/*'
+    branches-ignore:
+      - 'prod'
+    tags:
+      - 'v*'
+    tags-ignore:
+      - 'v0.*'
+    paths:
+      - 'src/**'
+      - '**.py'
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
 jobs:
   test: 
     name: display 
