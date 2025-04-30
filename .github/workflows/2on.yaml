@@ -280,6 +280,66 @@ on:
 
 
 
+    # project:
+    # # Trigger when a project is created, updated, or deleted
+    # # You can specify actions based on these changes:
+    #   types:
+    #     - created    # Trigger when a project is created
+    #     - updated    # Trigger when a project is updated
+    #     - deleted    # Trigger when a project is deleted
+
+
+
+
+    # project_card:
+    # # Trigger when a project card is created, updated, or moved
+    #  types:
+    #    - created    # Trigger when a card is created
+    #    - updated    # Trigger when a card is updated
+    #    - moved      # Trigger when a card is moved to a different column
+    #    - deleted    # Trigger when a card is deleted
+
+
+
+
+    # project_column:
+    # # Trigger when a column is created, updated, or deleted
+    #  types:
+    #    - created    # Trigger when a column is created
+    #    - updated    # Trigger when a column is updated
+    #    - deleted    # Trigger when a column is deleted
+
+
+
+
+    
+#     status:
+#      types:
+#        - success  # Workflow will trigger if the status of the check is successful
+#        - failure  # Workflow will trigger if the status of the check is a failure
+# jobs:
+#   notify_on_status:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Notify on Push, PR, or Status Change
+#         run: |
+#           echo "This workflow runs on push, pull request, or status change!"
+          
+#   handle_status:
+#     runs-on: ubuntu-latest
+#     needs: notify_on_status
+#     if: ${{ github.event.status == 'success' }}
+#     steps:
+#       - name: Handle Success Status
+#         run: echo "The status was successful, proceed with further steps!"
+      
+#   handle_failure:
+#     runs-on: ubuntu-latest
+#     needs: notify_on_status
+#     if: ${{ github.event.status == 'failure' }}
+#     steps:
+#       - name: Handle Failure Status
+#         run: echo "The status failed, take necessary action!"
 
 
 
@@ -287,14 +347,17 @@ on:
 
 
 
-
-
-
-
-
-
-
-
+    watch: 
+      types: 
+        - started   # Trigger when a star is added
+        - canceled  # Trigger when a star is removed
+jobs:
+  handle_watch:  
+    name: this is for hanlding watch 
+    runs-on: ubuntu-latest 
+    steps: 
+      - name: printing the name 
+        run: echo "this is the ${{github.event.watch}}"
 
 
 
