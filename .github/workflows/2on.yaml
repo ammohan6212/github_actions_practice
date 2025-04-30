@@ -1,11 +1,11 @@
 name: this demo is to get ON section in github 
 
 on: 
-  push: 
-    branches:
-      ##it will trigger based on particular file changed or branch is push
-      - 'dev'
-      - 'feature/*'
+  # push: 
+    # branches:
+    #   ##it will trigger based on particular file changed or branch is push
+    #   - 'dev'
+    #   - 'feature/*'
     # branches-ignore:
     #   - 'prod'
     # tags:
@@ -108,19 +108,34 @@ on:
     #   merged: true         # Trigger workflow when a PR is merged
 
 
-
-
-
-
+    workflow_dispatch: 
+      inputs: 
+        username: 
+          description: "enter environment to deploy"
+          required: true
+          type: string
+        deploy_type:
+          description: "choose deployment types"
+          required: true 
+          type: string
+          options: 
+            - "canary"
+            - "blue-green"
+          default: "canary"
+        tags: 
+          description: "enter the tag"
+          required: true 
+          type: number
 
 
 
 jobs:
-  test: 
-    name: display 
-    runs-on: ubuntu-latest 
+  deploy: 
+    name: this is for deployment of the job 
+    runs-on:  ubuntu-latest 
     steps:
-      - name: this is just for demonostration
-        run: echo "this is just for demo"
+      - name: gettign the variable 
+        run: |
+          echo "${{github.event.inputs.deploy_type}} and ${{github.event.inputs.username}} and $${{github.event.inputs.tags}}"
 
   
