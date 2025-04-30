@@ -347,17 +347,31 @@ on:
 
 
 
-    watch: 
-      types: 
-        - started   # Trigger when a star is added
-        - canceled  # Trigger when a star is removed
+    # watch: 
+    #   types: 
+    #     - started   # Trigger when a star is added
+    #     - canceled  # Trigger when a star is removed
+# jobs:
+#   handle_watch:  
+#     name: this is for hanlding watch 
+#     runs-on: ubuntu-latest 
+#     steps: 
+#       - name: printing the name 
+#         run: echo "this is the ${{github.event.watch}}"
+
+
+
+
+
+    workflow_run:
+      workflows:
+        - ci workflow   # Trigger after "CI Workflow" completes
+      types:
+        - success      # Trigger only on successful completion
 jobs:
-  handle_watch:  
-    name: this is for hanlding watch 
-    runs-on: ubuntu-latest 
-    steps: 
-      - name: printing the name 
-        run: echo "this is the ${{github.event.watch}}"
-
-
-
+  post-ci-job:
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Run Post-CI Steps
+        run: echo "CI completed successfully, running post steps"
+      
