@@ -1,0 +1,15 @@
+name: this demo is to get ON section in github 
+
+on: 
+  push: 
+    branches:
+      - 'dev'
+jobs:
+  test: 
+    name: display 
+    runs-on: ubuntu-latest 
+    steps:
+      - name: this is just for demonostration
+        run: echo "this is just for demo"
+
+  

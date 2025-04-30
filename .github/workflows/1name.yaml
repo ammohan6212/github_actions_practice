@@ -19,3 +19,21 @@ jobs:
     steps:
       - name: checkout code 
         run: echo "this is the first job"
+
+
+                                                 
+# |-------------------------------------|-----------------------------------------------------------------|
+# | `${{ github.actor }}`               | The username of the person who triggered the workflow.          |
+# | `${{ github.ref_name }}`            | The name of the branch or tag that triggered the workflow.      |
+# | `${{ github.ref_type }}`            | The type of ref that triggered the workflow (`branch` or `tag`).|
+# | `${{ github.event_name }}`          | The name of the event that triggered the workflow.              |
+# | `${{ github.repository }}`          | The full name of the repository (`owner/repo`).                 |
+# | `${{ github.workflow }}`            | The name of the workflow defined by the `name` field.           |
+# | `${{ github.run_number }}`          | The unique number for each run of the workflow.                 |
+# | `${{ github.sha }}`                 | The commit SHA that triggered the workflow.                     |
+# | `${{ github.head_ref }}`            | The source branch for pull request events.                      |
+# | `${{ github.base_ref }}`            | The base branch for pull request events.                        |
+# | `${{ github.event.pull_request.title }}` | The title of the pull request.                            |
+# | `${{ inputs.<input_name> }}`        | The value of a user-defined input from `workflow_dispatch`.     |
+# | `${{ matrix.<key> }}`               | The current value of a matrix job parameter.                    |
+
