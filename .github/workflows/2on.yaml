@@ -3,20 +3,118 @@ name: this demo is to get ON section in github
 on: 
   push: 
     branches:
+      ##it will trigger based on particular file changed or branch is push
       - 'dev'
       - 'feature/*'
-    branches-ignore:
-      - 'prod'
-    tags:
-      - 'v*'
-    tags-ignore:
-      - 'v0.*'
-    paths:
-      - 'src/**'
-      - '**.py'
-    paths-ignore:
-      - 'README.md'
-      - 'docs/**'
+    # branches-ignore:
+    #   - 'prod'
+    # tags:
+    #   - 'v*'
+    # tags-ignore:
+    #   - 'v0.*'
+    # paths:
+    #   - 'src/**'
+    #   - '**.py'
+    # paths-ignore:
+    #   - 'README.md'
+    #   - 'docs/**'    
+
+
+
+
+
+
+
+
+
+    # pull_request: 
+    #  # Trigger on specific types of pull request activity      
+    #   types: 
+    #     - opened           # Trigger when the PR is created
+    #     - edited           # Trigger when the PR is edited
+    #     - closed           # Trigger when the PR is closed (merged or rejected)
+    #     - reopened         # Trigger when the PR is reopened
+    #     - synchronize      # Trigger when commits are pushed to an open PR
+    #     - assigned         # Trigger when a PR is assigned to someone
+    #     - unassigned       # Trigger when a PR is unassigned
+    #     - labeled          # Trigger when a label is added to the PR
+    #     - unlabeled        # Trigger when a label is removed from the PR
+    #     - ready_for_review # Trigger when a PR is marked as ready for review
+    #     - locked           # Trigger when a PR is locked
+    #     - unlocked 
+
+    #   branches:
+    #     - main              # Trigger for PRs targeting 'main' branch
+    #     - develop           # Trigger for PRs targeting 'develop' branch
+    #     - 'feature/*'       # Trigger for PRs targeting branches matching the pattern
+    #     - release/*         # Trigger for PRs targeting release branches
+
+    # # Specify branches to exclude from triggering the workflow
+    #   branches-ignore:
+    #     - 'staging/*'       # Do not trigger for PRs targeting 'staging/*'
+
+    #   # Specify paths to monitor for changes within the PR
+    #   paths:
+    #     - 'src/**'          # Trigger when files in 'src' directory are changed
+    #     - 'docs/**'         # Trigger when files in 'docs' directory are changed
+    #     - '**/*.js'         # Trigger on changes to any JavaScript file
+    #     - '**/*.py'         # Trigger on changes to any Python file
+    #     - '!tests/**'       # Exclude triggering on changes to the 'tests' directory
+
+    #   # Specify paths to ignore, so changes in these files will not trigger the workflow
+    #   paths-ignore:
+    #     - 'README.md'       # Do not trigger on changes to README.md
+    #     - 'docs/**'         # Ignore changes in documentation files
+    #     - 'assets/**'       # Ignore changes in assets like images, logos, etc.
+    #     - '**/*.md'         # Ignore changes to markdown files
+
+    # # Specify the event that triggers the workflow when a pull request is merged
+    #   pull_request_target:
+    #     - opened           # Trigger when a PR is created
+    #     - closed           # Trigger when a PR is merged or closed
+
+    # # Define if the workflow should only trigger for specific pull request authors
+    #   users:
+    #     - 'username1'      # Trigger only when the PR is created by 'username1'
+    #     - 'username2'      # Trigger only when the PR is created by 'username2'
+    
+    # # Define if the workflow should trigger on PR events that involve specific teams or org members
+    #   teams:
+    #     - 'team_name'      # Trigger for pull requests involving a specific team
+
+    # # Trigger when a PR is created for a specific repository (useful for forks)
+    #   fork:
+    #     owner: 'repo_owner' # Trigger only for pull requests created in this repository's fork
+
+    # # Define whether the PR should trigger based on the presence of specific labels
+    #   labels:
+    #     - 'bug'            # Trigger when the PR is labeled with 'bug'
+    #     - 'enhancement'    # Trigger when the PR is labeled with 'enhancement'
+    #     - 'WIP'            # Trigger when the PR is labeled with 'WIP' (Work In Progress)
+    #     - 'documentation'  # Trigger when the PR is labeled with 'documentation'
+
+    # # Enable or disable triggering the workflow based on specific PR review statuses
+    #   review:
+    #     - approved         # Trigger when a PR is approved by a reviewer
+    #     - requested        # Trigger when a review request is made
+    #     - dismissed        # Trigger when a review is dismissed
+
+    # # Specify specific event handlers like labels or assignees
+    #   assignees:
+    #     - 'developer1'     # Trigger when a PR is assigned to 'developer1'
+    #     - 'developer2'     # Trigger when a PR is assigned to 'developer2'
+
+    # # Trigger workflow when PR is merged (use `merged` type under `types` in this case)
+    #   merged: true         # Trigger workflow when a PR is merged
+
+
+
+
+
+
+
+
+
 jobs:
   test: 
     name: display 
