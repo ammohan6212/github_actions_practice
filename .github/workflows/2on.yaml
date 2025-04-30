@@ -363,14 +363,78 @@ on:
 
 
 
-    workflow_run:
-      workflows: ["ci workflow"]   # Trigger after "CI Workflow" completes
-      types:
-        - success      # Trigger only on successful completion
-jobs:
-  post-ci-job:
-    runs-on: ubuntu-latest
-    steps:    
-      - name: Run Post-CI Steps
-        run: echo "CI completed successfully, running post steps"
+    # workflow_run:
+    #   workflows: ["ci workflow"]   # Trigger after "CI Workflow" completes
+    #   types:
+    #     - success      # Trigger only on successful completion
+# jobs:
+#   post-ci-job:
+#     runs-on: ubuntu-latest
+#     steps:    
+#       - name: Run Post-CI Steps
+#         run: echo "CI completed successfully, running post steps"
       
+
+
+
+
+
+    # workflow_call:     ##The workflow_call option in the on section allows you to trigger a GitHub Actions workflow from another workflow.
+    #   inputs:     
+    #     environment:
+    #       required: true
+    #       type: string
+    #     deploy_version:
+    #       required: false
+    #       default: 'latest'
+    #       type: string
+# jobs:
+#   call-other-workflow:
+#     uses: your-org/your-repo/.github/workflows/deploy.yml@main
+#     with:
+#       environment: ${{ inputs.environment }}
+#       deploy_version: ${{ inputs.deploy_version }}
+
+
+
+
+
+
+
+
+    # pull_request_review:
+    #   types:
+    #     - submitted  # Workflow triggered when a review is submitted
+    #     - edited    #workflow is triggered when a review is edited
+    #     - dismissed  # Workflow triggered when a review is dismissed
+
+
+
+
+
+
+
+    # pull_request_review_comment:
+    #   types: 
+    #     - created     # Trigger when a new comment is created on a pull request review.
+    #     - edited      # Trigger when an existing comment is edited.
+    #     - deleted     # Trigger when a comment is deleted.
+
+
+
+# the gollum event is used to trigger workflows based on changes to Wiki pages in a repository
+    # gollum:    
+    #   pages:
+    #     - 'Home'
+    #     - 'Documentation/*'
+
+
+
+
+
+
+# he page_build event in GitHub Actions is triggered when a GitHub Pages site is built or deploye
+    # page_build:
+    #   types:
+    #     - started   # Trigger when a page build starts
+    #     - completed # Trigger when a page build completes
