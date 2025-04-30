@@ -1,0 +1,50 @@
+
+name: Example Workflow
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run a command that will fail
+        run: |
+          echo "This step will fail"
+          exit 1  # This will cause the job to fail
+
+  job2:
+    runs-on: ubuntu-latest
+    continue-on-error: true  # This allows job2 to continue even if job1 fails
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run a command
+        run: echo "This job continues even if job1 fails"
+
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run another command
+        run: echo "This job will run regardless of job2's result"
+# ```
+
+# ### Key Points:
+# - `continue-on-error: true` is set on `job2`. This allows `job2` to continue even if a failure happens in `job1`.
+# - `job3` runs independently of the results of `job1` or `job2`.
+
+# In this example:
+# - `job1` fails because it explicitly exits with code `1`.
+# - `job2` continues execution even though `job1` fails because of the `continue-on-error: true` setting.
+# - `job3` runs regardless of the status of `job1` and `job2`.
+
+# This configuration ensures that even when failures occur, some jobs (like `job2`) can still execute, making it useful in workflows where certain errors are acceptable, but you still want to proceed with other tasks.

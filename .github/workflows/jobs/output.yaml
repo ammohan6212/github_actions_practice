@@ -1,0 +1,45 @@
+name: Example Workflow with Outputs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      message: ${{ steps.step1.outputs.result }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set output value
+        id: step1
+        run: echo "::set-output name=result::Hello from job1"
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use output from job1
+        run: echo "The message from job1 is: ${{ needs.job1.outputs.message }}"
+# ```
+
+# ### Explanation:
+# - **`job1`**:
+#   - This job sets an output called `message` by using the `echo "::set-output name=result::value"` syntax.
+#   - The output is defined at the job level under `outputs`, and it's captured from the step `step1` where the `set-output` command is used.
+  
+# - **`job2`**:
+#   - This job depends on `job1` (`needs: job1`), meaning `job2` will only run after `job1` completes successfully.
+#   - It accesses the output from `job1` using `${{ needs.job1.outputs.message }}` and prints the value to the console.
+
+# ### Key Points:
+# - The output of `job1` is used in `job2` to show how data can flow between jobs.
+# - The `${{ needs.job1.outputs.message }}` syntax fetches the output from the `job1`.
+
+# This is a basic example of how to use outputs in GitHub Actions. You can expand this by using more complex workflows and passing multiple outputs.

@@ -1,0 +1,41 @@
+jobs:
+  docker-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .                         # Specify the build context (current directory)
+          push: true                         # Push the image to the registry
+          tags: user/my-app:latest           # Tag the image
+          file: Dockerfile   
+
+  setup-python-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Specify the version of Python you want to set up
+          cache: 'pip'       
+             
+  setup-python-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Specify the version of Python you want to set up
+          cache: 'pip'          

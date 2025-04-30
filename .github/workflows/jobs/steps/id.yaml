@@ -1,0 +1,14 @@
+# The id is used to give a unique identifier to a step so that its outputs can be referenced in other steps or jobs.
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step that sets an output
+        id: greeting
+        run: echo "greeting=Hello from step!" >> $GITHUB_OUTPUT
+
+      - name: Step that uses the previous output
+        run: echo "${{ steps.greeting.outputs.greeting }}"
+
+
+      

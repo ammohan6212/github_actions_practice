@@ -1,0 +1,20 @@
+jobs:
+  matrix-job:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false    # Don’t cancel other jobs on failure
+      matrix:
+        node-version: [14, 16, 18]
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run tests
+        run: |
+          if [ ${{ matrix.node-version }} == '16' ]; then
+            exit 1  # Simulate failure on Node 16
+          fi
+
+
+#  If set to false, matrix jobs will continue even if one of them fails.

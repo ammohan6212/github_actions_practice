@@ -1,0 +1,38 @@
+name: Example Workflow with Defaults
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./src
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Run a script
+        run: |
+          echo "This will run from the './src' directory using bash"
+          echo "Current directory is: $(pwd)"
+
+# defaults in the job section: This sets default values for the run step.
+
+# working-directory: Specifies the default directory (./src in this case) where the commands will be executed.
+
+# shell: Defines which shell to use for executing the commands (default is bash in this example).
+
+# Steps:
+
+# The checkout action checks out your repository so that the job can work with your code.
+
+# The run step then executes the commands from the ./src directory, and the shell used is bash.
+
+# By setting defaults in the job, you avoid having to repeat settings like working-directory and shell for each step, simplifying your workflow.

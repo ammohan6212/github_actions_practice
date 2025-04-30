@@ -1,0 +1,5 @@
+# In GitHub Actions, the workflow_run event is used to trigger a workflow after another workflow has completed, allowing you to chain workflows across the same repository.
+
+# This is not used inside the steps: section but in the on: section of the workflow file to trigger a workflow based on the result of another workflow.
+
+

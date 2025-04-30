@@ -1,0 +1,88 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      build-status: ${{ steps.build.outputs.status }}
+
+    steps:
+      # Step 1: Checkout code (Official GitHub Action)
+      - name: Checkout code
+        uses: actions/checkout@v2
+        id: checkout
+
+      # Step 2: Set up Python (Official GitHub Action)
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+        id: setup-python
+
+      # Step 3: Set up Node.js (Third-party Action from Marketplace)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+        id: setup-node
+
+      # Step 4: Run a custom action (from the same repository)
+      - name: Run Custom Action
+        uses: ./github/actions/my-action
+        with:
+          custom-input: 'value'
+        id: custom-action
+
+      # Step 5: Run tests (Using run)
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          pytest --maxfail=3 --disable-warnings -q
+        id: run-tests
+
+      # Step 6: Use outputs from a previous step
+      - name: Get Python Version
+        run: echo "Python version is ${{ steps.setup-python.outputs.python-version }}"
+
+      # Step 7: Handle failure gracefully with continue-on-error
+      - name: Fail the step but continue
+        run: exit 1
+        continue-on-error: true
+        id: fail-step
+
+      # Step 8: Set output from a step (for downstream jobs)
+      - name: Set build status output
+        run: echo "::set-output name=status::success"
+        id: build
+        continue-on-error: false
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python (using output from previous job)
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Step 3: Deploy based on input from manual trigger
+      - name: Deploy to Environment
+        run: |
+          echo "Deploying to the environment: ${{ github.event.inputs.deploy-env }}"
+        id: deploy-environment
+
+      # Step 4: Use a custom action from the repository
+      - name: Deploy custom action
+        uses: ./github/actions/deploy-action
+        with:
+          deploy-env: ${{ github.event.inputs.deploy-env }}
+        id: deploy-action
+
+      # Step 5: Show deployment status
+      - name: Show Deployment Status
+        run: |
+          echo "Deployment status: ${{ needs.build.outputs.build-status }}"
+        id: show-status

@@ -1,0 +1,57 @@
+
+name: Example Workflow with Concurrency
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: "example-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: "deploy-${{ github.ref }}"
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to production
+        run: ./deploy.sh
+# ```
+
+# ### Explanation:
+# - **concurrency**: This prevents multiple workflows or jobs from running simultaneously for the same reference. If a new push is made to the same branch, the previous job will be canceled.
+#   - `group`: The group is identified by the branch reference `${{ github.ref }}`, ensuring that concurrency is applied to each branch individually.
+#   - `cancel-in-progress: true`: If a new job starts for the same branch, the previous one is canceled.
+  
+# In this example, there are two jobs: `build` and `deploy`. The `deploy` job depends on the `build` job and uses a separate concurrency setting to ensure jobs do not overlap during deployment.
+
+# This is how you can set up concurrency at the job level to manage simultaneous job executions in GitHub Actions.

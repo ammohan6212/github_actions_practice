@@ -1,0 +1,29 @@
+
+# In GitHub Actions, outputs in the steps section allow you to pass values between steps within the same job.
+
+
+name: Step Outputs Example
+
+on: [push]
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Step 1 - Generate output
+        id: step_one
+        run: echo "value=Hello from Step 1" >> $GITHUB_OUTPUT
+
+      - name: Step 2 - Use output from Step 1
+        run: echo "The value is: ${{ steps.step_one.outputs.value }}"
+
+
+      - name: Step with multiple outputs
+        id: multi
+        run: |
+           echo "greeting=Hello" >> $GITHUB_OUTPUT
+            echo "name=World" >> $GITHUB_OUTPUT
+
+      - name: Use multiple outputs
+        run: echo "${{ steps.multi.outputs.greeting }}, ${{ steps.multi.outputs.name }}!"

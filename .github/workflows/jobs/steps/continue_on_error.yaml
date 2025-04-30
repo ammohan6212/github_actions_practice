@@ -1,0 +1,16 @@
+# This option lets the workflow continue executing subsequent steps even if the current step fails.
+
+name: Example Using continue-on-error
+
+on: [push]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step that fails
+        run: exit 1
+        continue-on-error: true
+
+      - name: Step that still runs
+        run: echo "This runs even though the previous step failed"

@@ -1,0 +1,11 @@
+jobs:
+  timeout-example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5   # Job will be killed if it runs over 5 minutes
+    steps:
+      - name: Simulate long task
+        run: sleep 600
+        timeout-minutes: 2  # This step will be killed after 2 minutes
+
+
+
