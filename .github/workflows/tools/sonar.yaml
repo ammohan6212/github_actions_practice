@@ -1,0 +1,33 @@
+Analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Analyze with SonarQube
+
+        # You can pin the exact commit or the version.
+        # uses: SonarSource/sonarqube-scan-action@v1.1.0
+        uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on SonarQube, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}   # add the URL of your instance to the secrets of this repo with the name SONAR_HOST_URL (Settings > Secrets > Actions > add new repository secret)
+        with:
+          args: |
+            -Dsonar.projectKey=my_project_key
+            -Dsonar.projectName=my_project_name
+            -Dsonar.projectVersion=1.0.0
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.language=java  # Change this according to your project language (e.g., java, js, py, etc.)
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.test.inclusions=**/*Test*.java  # Adjust test file inclusions pattern
+            -Dsonar.junit.reportPaths=tests/test-coverage.xml  # Specify the path to the JUnit report
+            -Dsonar.scoverage.reportPath=target/scala-2.12/scoverage-report.xml  # Specify the path for code coverage (for Scala)
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov-report.json  # LCOV coverage report for JavaScript
+            -Dsonar.exclusions=**/test/**/*,**/build/**/*  # Exclude test and build directories from analysis
+            -Dsonar.projectKey=
+            -Dsonar.sources=
+            -Dsonar.projectBaseDir=
+            -Dsonar.tests=
+            -Dsonar.verbose=
+

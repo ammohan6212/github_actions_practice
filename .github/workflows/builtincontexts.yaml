@@ -1,0 +1,151 @@
+# Here’s a **comprehensive list** of built-in contexts in GitHub Actions, along with how you can access them in a workflow. These contexts provide valuable information about the workflow run, the environment, and the event triggering the workflow.
+
+# ### 1. **GitHub Context (`github`)**
+# The `github` context contains information related to the GitHub repository, event, and workflow.
+
+# - `github.actor`: The username of the person or app that triggered the workflow.
+# - `github.event`: The full webhook event payload (JSON object).
+# - `github.event_name`: The name of the event that triggered the workflow (e.g., `push`, `pull_request`).
+# - `github.event_path`: The file path to the event payload (used with `github` API).
+# - `github.repository`: The owner and repository name (e.g., `user/repo`).
+# - `github.repository_owner`: The owner of the repository (e.g., `user`).
+# - `github.sha`: The commit SHA that triggered the workflow.
+# - `github.ref`: The Git reference (e.g., `refs/heads/main`).
+# - `github.ref_name`: The short reference name (e.g., `main`).
+# - `github.head_ref`: The head branch of the pull request (if the event is a pull request).
+# - `github.base_ref`: The base branch of the pull request (if the event is a pull request).
+# - `github.workflow`: The name of the workflow.
+# - `github.run_id`: A unique identifier for the workflow run.
+# - `github.run_number`: The number of the workflow run.
+# - `github.job`: The name of the current job.
+# - `github.step`: The name of the current step.
+# - `github.event_url`: The URL to the event on GitHub.
+
+# ### 2. **Runner Context (`runner`)**
+# The `runner` context provides information about the environment in which the job is running.
+
+# - `runner.os`: The operating system of the runner (e.g., `Linux`, `Windows`, `macOS`).
+# - `runner.name`: The name of the runner.
+# - `runner.arch`: The architecture of the runner (e.g., `x86_64`).
+# - `runner.temp`: The path to the temporary directory for the runner.
+# - `runner.tool_cache`: The path to the tool cache directory for the runner.
+
+# ### 3. **Job Context (`job`)**
+# The `job` context gives information about the job currently running.
+
+# - `job.status`: The status of the job (`success`, `failure`, `cancelled`).
+# - `job.name`: The name of the current job.
+# - `job.runner.os`: The operating system used by the job runner.
+# - `job.run_id`: The ID of the workflow run.
+# - `job.run_number`: The number of the workflow run.
+
+# ### 4. **Step Context (`step`)**
+# The `step` context is related to the current step in the workflow.
+
+# - `step.name`: The name of the current step.
+# - `step.id`: The ID of the current step.
+# - `step.status`: The status of the current step (`success`, `failure`).
+# - `step.outputs`: The outputs defined for the step.
+# - `step.start_time`: The start time of the step (in UNIX timestamp format).
+# - `step.end_time`: The end time of the step (in UNIX timestamp format).
+
+# ### 5. **Matrix Context (`matrix`)**
+# The `matrix` context is used when a job is running as part of a matrix build.
+
+# - `matrix.<variable>`: The matrix variable being used in the job. For example, `matrix.os` will be available if the matrix includes an `os` variable.
+
+# ### 6. **Secrets Context (`secrets`)**
+# The `secrets` context allows you to access any secrets stored in GitHub.
+
+# - `secrets.<secret_name>`: Access a secret (e.g., `secrets.GITHUB_TOKEN`).
+
+# ### 7. **Environment Context (`env`)**
+# The `env` context provides access to environment variables.
+
+# - `env.<variable_name>`: Access an environment variable (e.g., `env.PATH`).
+
+# ### 8. **Workflow Context (`workflow`)**
+# The `workflow` context provides information about the workflow file and its execution.
+
+# - `workflow.name`: The name of the workflow defined in the YAML file.
+# - `workflow.id`: The unique identifier of the workflow.
+
+# ### 9. **Runner's Temporary Directory Context (`runner`)**
+# - `runner.temp`: The path to the temporary directory for the runner to store files.
+
+# ### 10. **Repository Context (`repository`)**
+# The `repository` context provides metadata related to the repository.
+
+# - `repository`: The full repository name (e.g., `user/repo`).
+# - `repository.owner`: The owner of the repository (e.g., `user`).
+
+# ### 11. **Commit Context (`commit`)**
+# This context is useful when working with commit information.
+
+# - `commit.sha`: The commit SHA that triggered the workflow.
+# - `commit.message`: The commit message that triggered the workflow.
+# - `commit.author`: The author of the commit.
+
+# ### Example Workflow with More Contexts:
+
+
+name: Comprehensive Workflow with Built-in Contexts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Display GitHub Context
+        run: |
+          echo "Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Event Name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+
+      - name: Display Runner Context
+        run: |
+          echo "Operating System: ${{ runner.os }}"
+          echo "Runner Name: ${{ runner.name }}"
+          echo "Runner Architecture: ${{ runner.arch }}"
+
+      - name: Display Job Context
+        run: |
+          echo "Job Status: ${{ job.status }}"
+          echo "Job Name: ${{ job.name }}"
+
+      - name: Display Step Context
+        run: |
+          echo "Step Name: ${{ step.name }}"
+          echo "Step Status: ${{ step.status }}"
+          
+      - name: Display Secrets Context
+        run: |
+          echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+          
+      - name: Matrix Example
+        run: |
+          echo "Matrix OS: ${{ matrix.os }}"
+        strategy:
+          matrix:
+            os: [ubuntu-latest, macos-latest]
+# ```
+
+# ### Key Notes:
+# - **`github` context**: Used for accessing information related to GitHub itself (e.g., repository name, commit SHA).
+# - **`runner` context**: Provides details about the environment where the runner is executing.
+# - **`job` context**: Details about the specific job being executed in the workflow.
+# - **`step` context**: Access information related to the step currently running.
+# - **`matrix` context**: Use in matrix builds for multiple variations of job runs.
+# - **`secrets` context**: Secure access to your GitHub secrets.
+
+# This list should give you a comprehensive understanding of the various contexts you can use in GitHub Actions workflows.

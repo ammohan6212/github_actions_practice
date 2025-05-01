@@ -1,0 +1,328 @@
+# Here are examples of each of the functions you mentioned in a GitHub Actions workflow, demonstrating how they can be used:
+
+# ### 1. `success()`
+# The `success()` function is used to check if a previous step or job was successful.
+
+# ```yaml
+name: Success Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-status:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run a command
+        id: run_command
+        run: |
+          echo "Running a successful command"
+      
+      - name: Check if the job was successful
+        run: |
+          if [[ "${{ job.status }}" == "success" ]]; then
+            echo "Job succeeded!"
+          fi
+
+### 2. `failure()`
+# The `failure()` function checks if a previous step or job failed.
+
+name: Failure Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-failure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run a failing command
+        id: run_command
+        run: |
+          exit 1
+
+      - name: Check if the job failed
+        run: |
+          if [[ "${{ job.status }}" == "failure" ]]; then
+            echo "Job failed!"
+          fi
+```
+
+### 3. `cancelled()`
+The `cancelled()` function checks if the job was cancelled.
+
+```yaml
+name: Cancelled Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-cancelled:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cancel the job
+        run: |
+          echo "This job will be cancelled"
+
+      - name: Check if the job was cancelled
+        run: |
+          if [[ "${{ job.status }}" == "cancelled" ]]; then
+            echo "Job was cancelled!"
+          fi
+```
+
+### 4. `always()`
+The `always()` function is used to ensure a step runs no matter the status of previous steps.
+
+```yaml
+name: Always Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  always-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: A step that might fail
+        run: |
+          exit 1
+
+      - name: This step will always run
+        if: ${{ always() }}
+        run: echo "This will run no matter what"
+```
+
+### 5. `startsWith()`
+The `startsWith()` function checks if a string starts with a given substring.
+
+```yaml
+name: StartsWith Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  startswith-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check if string starts with a prefix
+        run: |
+          my_string="Hello World"
+          if [[ "${my_string}" == Hello* ]]; then
+            echo "String starts with 'Hello'"
+          fi
+```
+
+### 6. `endsWith()`
+The `endsWith()` function checks if a string ends with a given substring.
+
+```yaml
+name: EndsWith Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  endswith-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check if string ends with a suffix
+        run: |
+          my_string="Hello World"
+          if [[ "${my_string}" == *World ]]; then
+            echo "String ends with 'World'"
+          fi
+```
+
+### 7. `contains()`
+The `contains()` function checks if a string contains a given substring.
+
+```yaml
+name: Contains Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  contains-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check if string contains a substring
+        run: |
+          my_string="Hello World"
+          if [[ "${my_string}" == *World* ]]; then
+            echo "String contains 'World'"
+          fi
+```
+
+### 8. `format()`
+The `format()` function is used to format a string with placeholders.
+
+```yaml
+name: Format Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  format-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Format a string
+        run: |
+          my_string=$(printf "Hello %s!" "World")
+          echo $my_string
+```
+
+### 9. `join()`
+The `join()` function is used to join elements of an array into a single string.
+
+```yaml
+name: Join Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  join-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Join array elements into a string
+        run: |
+          my_array=("apple" "banana" "cherry")
+          my_string=$(IFS=,; echo "${my_array[*]}")
+          echo $my_string
+```
+
+### 10. `toJson()`
+The `toJson()` function converts an object to JSON format.
+
+```yaml
+name: ToJson Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tojson-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Convert object to JSON
+        run: |
+          my_object="{\"name\": \"John\", \"age\": 30}"
+          echo "${my_object}" | jq .
+```
+
+### 11. `fromJson()`
+The `fromJson()` function converts a JSON string back to an object.
+
+```yaml
+name: FromJson Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  fromjson-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Convert JSON string to object
+        run: |
+          my_json='{"name": "John", "age": 30}'
+          echo "$my_json" | jq .
+```
+
+### 12. `hashFiles()`
+The `hashFiles()` function calculates the hash of files in the repository.
+
+```yaml
+name: HashFiles Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hashfiles-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Calculate hash of files
+        run: |
+          file_hash=$(hashFiles('**/*.js'))
+          echo "Hash of JavaScript files: $file_hash"
+```
+
+These are examples for each of the functions you mentioned. You can adapt these to your specific GitHub Actions workflows as needed!
